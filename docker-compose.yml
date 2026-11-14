@@ -1,0 +1,66 @@
+# Nearly Estate inside a Phala Cloud CVM (dstack, Intel TDX).   deploy: npx phala deploy -c docker-compose.yml -n nearly-estate --env-file .env.tee
+# The hash of this whole file is measured into RTMR3 at boot (the "compose-hash" in the attestation quote), so what runs is exactly this:
+# the pinned image, the data volume on the CVM's encrypted disk, the attestation sidecar. Secrets come in as encrypted env (never in this file)
+# and are decrypted only inside the enclave; the feed-token secret is never passed in at all: the server draws it at start, in memory.
+services:
+  keys:
+    image: ghcr.io/sam3dsol/nearly-estate@sha256:f4315f4a2baa6cec4edf4f5dc8a7ca804e7c74d4020a05608600175756cee5ea   # built from this repo's Dockerfile; digest in ATTESTATION.md
+    ports: ["8830:8832"]          # the server binds 127.0.0.1:8830; "edge" below publishes it on 8832 from inside the same network namespace
+    volumes:
+      - keys-data:/data
+      - /var/run/dstack.sock:/var/run/dstack.sock   # the guest agent: /api/attestation asks it for a TDX quote           # hidden accounts, salts, pages, reviews: encrypted at rest, readable by this enclave only
+    environment:
+      PORT: "8830"
+      DATA: /data
+      ORIGIN: "*"
+      AUTO_RULES_PER_HOUR: "200"            # auto ruling: the backlog of undated markets clears in one go
+      KEYS_CONTRACT: keys.nearlyops.near
+      NEAR_RPC: ${NEAR_RPC}                     # encrypted env: a keyed FastNEAR RPC (the public one rate-limits the operator's calls)
+      SITE: https://nearly.trade
+      AGENTS_BFF: https://nearly.trade/api/agents
+      OPERATOR_KEY: /data/operator.json
+      DEFENDER_KEY: /data/defender.json
+      NEARAI_KEY: ${NEARAI_KEY}                 # encrypted env
+      EDGE_KEY: ${EDGE_KEY}                   # encrypted env: the header our edge (Caddy) puts on what it proxies; only then is a forwarded client address believed
+      AGENTS_SERVER_KEY: ${AGENTS_SERVER_KEY}   # encrypted env: the shared header the agents backend requires from this server (owner login on the agent routes)
+      ADMIN_TOKEN: ${ADMIN_TOKEN}               # encrypted env: a one-time data import
+      OPERATOR_KEY_JSON: ${OPERATOR_KEY_JSON}   # encrypted env: the operator's function-call key, written to the encrypted disk at start
+      DESK_KEYS_JSON: ${DESK_KEYS_JSON}         # encrypted env: the three fact-desk agents' own keys (fresh implicit accounts, a few NEAR cents each)
+      DEFENDER_KEY_JSON: ${DEFENDER_KEY_JSON}   # encrypted env: the defender's own key (an implicit account funded with 10 NEAR): counters challenges against the judges, dispute only
+      DEFEND_MAX_BOND: "4"                   # the largest bond the defender puts on in one round (the appeal stops at 4 NEAR; past that a human decides)
+      DEFEND_PER_DAY: "10"                   # and in one day, across markets
+      HIRE_KEY_JSON: ${HIRE_KEY_JSON}           # encrypted env: the hired desks' key, a function-call key on the operator account for desk_buy only
+      WIKI_SEEDS_PER_TOPIC: "8"               # every fact a market: the wiki fund opens one for each claim on a topic page
+      WIKI_SEEDS_PER_DAY: "200"               # new pages a day at most, so the fund cannot be drained by page spam
+      WIKI_FACT_SEED_NEAR: "0.1"              # the market maker a new fact market opens with, from the wiki fund
+      WIKI_HIDDEN_MARKETS: "267,310,359,358,361,424,425,426,427,428,429,430"  # hidden from the pages, on chain anyway: two early junk questions, the 301-character question of our mechanism test, a twin of 333, and 424-430 (opened on an "Undefined" page by a prototype-name URL, 11-14)
+      WIKI_ASKS_PER_DAY: "150"                # questions the box opens from the wiki fund a day
+      WIKI_TOPICS_PER_HOUR: "30"              # new topic pages an hour
+      DESK_DAILY_NEAR: "0.15"                 # each fact-desk agent spends at most this much a day
+      DESK_MAX_TRADE: "0.02"
+      WIKI_OWN_CREATORS: ${WIKI_OWN_CREATORS}   # encrypted env: accounts whose markets are the encyclopedia's own
+      DESK_PER_TICK: "8"                      # views per agent per 20-minute round
+    command: ["sh", "-c", "umask 077 && printf '%s' \"$$OPERATOR_KEY_JSON\" > /data/operator.json && { [ -z \"$$DEFENDER_KEY_JSON\" ] || printf '%s' \"$$DEFENDER_KEY_JSON\" > /data/defender.json; } && exec node index.mjs"]
+    restart: always
+  edge:
+    image: alpine/socat:1.8.0.0
+    network_mode: "service:keys"  # same network namespace as the server: 0.0.0.0:8832 -> 127.0.0.1:8830, nothing else changes
+    command: ["TCP-LISTEN:8832,fork,reuseaddr", "TCP:127.0.0.1:8830"]
+    restart: always
+  # the attestation endpoints a verifier calls (ops/attest.mjs): the quote with the caller's challenge, and the app-compose the enclave booted with
+  attest:
+    image: node:24.22.1-bookworm-slim
+    ports: ["8831:8831"]
+    volumes:
+      - /var/run/dstack.sock:/var/run/dstack.sock
+    command: ["sh", "-c", "mkdir -p /a && cd /a && npm i -s @phala/dstack-sdk@0.5.8 && node -e \"
+      const http = require('http'); const { DstackClient } = require('@phala/dstack-sdk'); const c = new DstackClient();
+      http.createServer(async (req, res) => { try {
+        const u = new URL(req.url, 'http://x');
+        if (u.pathname === '/attestation') { const n = (u.searchParams.get('nonce') || '').slice(0, 64); const q = await c.getQuote(Buffer.from(n.padEnd(64, '0'), 'hex')); return res.end(JSON.stringify({ quote: q.quote, event_log: q.event_log, vm_config: q.vm_config, report_data: n })) }
+        if (u.pathname === '/info') return res.end(JSON.stringify(await c.info()));
+        res.statusCode = 404; res.end('attestation, info')
+      } catch (e) { res.statusCode = 500; res.end(e.message) } }).listen(8831, '0.0.0.0')\""]
+    restart: always
+volumes:
+  keys-data:

@@ -1,0 +1,21 @@
+{
+  "name": "nearly-estate",
+  "private": true,
+  "type": "module",
+  "description": "Nearly Estate: the checks a judge runs (verify, attest, receipts, unit tests); the server has its own package.json",
+  "dependencies": {
+    "near-api-js": "^7.4.0"
+  },
+  "scripts": {
+    "attacks": "node ops/attack-bench.mjs --out docs/attacks.json",
+    "measure": "node ops/measure.mjs --out docs/measure.json",
+    "setup": "npm i && cd server && npm i",
+    "check": "node ops/check-receipt.mjs 4 https://nearly.trade",
+    "test": "node --test server/test/*.test.mjs",
+    "verify": "node ops/verify.mjs",
+    "attest": "node ops/attest.mjs",
+    "judge": "node ops/judge.mjs",
+    "outside": "node ops/outside.mjs",
+    "users": "node ops/outside.mjs"
+  }
+}

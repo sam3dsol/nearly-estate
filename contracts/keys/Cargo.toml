@@ -1,0 +1,15 @@
+[package]
+name = "nearly-keys"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+near-sdk = { workspace = true }
+serde_json = { version = "1.0", features = ["preserve_order"] }   # the judge request is parsed and re-serialized in the relay's key order
+
+[dev-dependencies]
+near-sdk = { workspace = true, features = ["unit-testing"] }

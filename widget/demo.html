@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Nearly Checkout demo</title>
+<!-- the checkout demo in the market-card system of the keys, swarm and wiki pages: slate cards, one jade action, Geist -->
+<style>
+@font-face{font-family:Geist;src:url(fonts/geist-latin-wght-normal.woff2) format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:'Geist Mono';src:url(fonts/geist-mono-latin-wght-normal.woff2) format('woff2');font-weight:100 900;font-display:swap}
+:root{--bg:#0b0c0e;--s1:#131519;--s2:#191c21;--line:#23272d;--line2:#2e333a;--fg:#eceef0;--fg2:#a3a9b1;--fg3:#6c727a;--jade:#2dd4bf;--jadehi:#5eead4;--ink:#06201c;--jadet:#2dd4bf;color-scheme:dark}
+:root[data-theme=light]{--bg:#eef1f4;--s1:#fff;--s2:#f3f5f7;--line:#dde2e8;--line2:#cfd5dc;--fg:#101318;--fg2:#4b535d;--fg3:#6b737c;--jadehi:#22c3ae;--jadet:#0d7f72;color-scheme:light}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.5 Geist,system-ui,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+a{color:inherit;text-decoration:none}.mono{font-family:'Geist Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.top{display:flex;align-items:center;gap:12px;padding:18px 48px;border-bottom:1px solid var(--line)}
+.logo{font-weight:700;font-size:20px;letter-spacing:-.02em}.logo b{color:var(--jade)}.logo span{color:var(--fg3);font-weight:500}
+.top .end{margin-left:auto;font-size:13px;color:var(--fg3)}.top .end:hover{color:var(--fg)}
+.wrap{max-width:1440px;margin:0 auto;padding:36px 48px 56px}section{margin-bottom:44px}
+.sh{display:flex;align-items:baseline;justify-content:space-between;gap:8px 24px;flex-wrap:wrap;margin-bottom:16px}.sh h1,.sh h2{font-size:24px;font-weight:600;letter-spacing:-.02em;line-height:1.2}.sh p{color:var(--fg3);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}.span2{grid-column:span 2}
+.card{background:var(--s1);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.name{font-weight:600;font-size:16px;letter-spacing:-.01em}.sub{color:var(--fg2);font-size:13px;font-weight:450;line-height:1.5;overflow-wrap:anywhere}.sub a{color:var(--fg2);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line2)}
+.big{font-family:'Geist Mono',monospace;font-size:34px;font-weight:500;letter-spacing:-.02em;line-height:1.1}.big small{font:400 15px Geist,system-ui;letter-spacing:0;color:var(--fg3)}
+.tr{display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:12px;align-items:center;font-family:'Geist Mono',monospace;font-size:13px;font-weight:500;color:var(--fg);padding:8px 0;border-bottom:1px solid var(--line)}.tr:last-of-type{border:0}.tr .v{color:var(--fg);text-align:right}.tr a:hover{color:var(--fg)}
+.code{font-family:'Geist Mono',monospace;font-size:12.5px;line-height:1.55;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px;color:var(--fg2);white-space:pre;overflow-x:auto}
+.grow{flex:1}
+@media(max-width:1100px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.span2{grid-column:1/-1}}
+@media(max-width:640px){.top{padding:16px}.wrap{padding:24px 16px 48px}.grid{grid-template-columns:minmax(0,1fr);gap:12px}.span2{grid-column:auto}.card{padding:16px}.sh{flex-direction:column;gap:4px}.sh h1,.sh h2{font-size:22px}.big{font-size:30px}}
+/* the hero, as on the keys, swarm, wiki and agents pages: the nearly mark before a wall of coins from every chain,
+   the ones at the arch turned to NEAR; dark in both themes; on a phone the art sits above the headline */
+.hero{position:relative;height:560px;background:url(img/checkout.jpg) right bottom/auto 94% no-repeat,#050b09}
+.hero:before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#050b09 0,#050b09 30%,transparent 55%),linear-gradient(180deg,#050b09 0,#050b09 4%,transparent 14%),linear-gradient(0deg,var(--bg) 0,transparent 22%);pointer-events:none}
+.hero .art{display:none}
+:root[data-theme=light] .hero:before{background:linear-gradient(90deg,#050b09 0,#050b09 30%,transparent 55%),linear-gradient(180deg,#050b09 0,#050b09 4%,transparent 14%),linear-gradient(0deg,#050b09 0,transparent 22%)}
+.hero .in{position:relative;max-width:1440px;height:100%;margin:0 auto;padding:0 48px;display:flex;flex-direction:column;justify-content:center}
+.hero .eb{margin-bottom:16px;font:600 12px 'Geist Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:#2dd4bf}
+.hero h1{max-width:640px;font-size:56px;font-weight:700;line-height:1.02;letter-spacing:-.03em;color:#f2f4f5}
+.hero p{max-width:470px;margin:16px 0 28px;font-size:18px;line-height:1.5;color:#c4ccc8}
+.hero .act{display:flex;gap:12px;flex-wrap:wrap}
+.hbtn{display:inline-flex;align-items:center;justify-content:center;height:46px;padding:0 22px;border-radius:10px;font-weight:600;font-size:15px;color:var(--ink);background:var(--jade);border:1px solid transparent}.hbtn:hover{background:var(--jadehi)}
+.hbtn.ghost{color:#eceef0;background:transparent;border-color:rgb(255 255 255/.22)}.hbtn.ghost:hover{background:rgb(255 255 255/.06);border-color:rgb(255 255 255/.4)}
+#pay,#embed{scroll-margin-top:24px}
+@media(max-width:640px){.hero{height:auto;background:none}.hero:before{display:none}.hero .art{display:block;position:relative;aspect-ratio:16/10;background:url(img/checkout.jpg) 84% center/cover no-repeat,#050b09}.hero .art:after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,var(--bg) 0,transparent 30%)}.hero .in{height:auto;padding:4px 16px 0}.hero .eb{margin-bottom:10px;color:var(--jadet)}.hero h1{font-size:32px;color:var(--fg)}.hero p{margin:10px 0 18px;font-size:15px;color:var(--fg2)}.hbtn{flex:1;height:44px;padding:0 14px}.hbtn.ghost{color:var(--fg);border-color:var(--line)}}
+</style>
+<script>
+// the same mode as the rest of nearly.trade (the site keeps it in this browser), else the system's
+try { const m = localStorage.getItem('nearly.mode.v2'); if (m === 'light' || (!m && matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.dataset.theme = 'light' } catch {}
+</script>
+</head><body>
+<div class="top"><a class="logo" href="https://nearly.trade">nearly<b>.</b> <span>Checkout</span></a><a class="end mono" href="https://nearly.trade">nearly.trade</a></div>
+<section class="hero"><div class="art" aria-hidden="true"></div><div class="in">
+  <div class="eb">Universal checkout</div>
+  <h1>Accept payments from any chain.</h1>
+  <p>Add checkout to any site or app. Buyers pay from any wallet on any chain, and NEAR Intents delivers the exact amount to you.</p>
+  <div class="act"><a class="hbtn" href="#embed">Integrate now</a><a class="hbtn ghost" href="#pay">View live checkout</a></div>
+</div></section>
+<div class="wrap">
+<section>
+  <div class="grid">
+    <div class="card" id="pay">
+      <div class="sub">A shop charges</div>
+      <div><div class="big">$5.00</div><div class="sub" id="gets">The shop receives it in NEAR</div></div>
+      <div class="grow" data-nearly-checkout data-recipient="nearlyops.near" data-asset="nep141:wrap.near" data-usd="5" data-label="Pay $5"></div>
+    </div>
+    <div class="card">
+      <div class="name">Paid, verified</div>
+      <div>
+        <div class="tr"><span>Base</span><a href="https://basescan.org/tx/0xb8b77337608e4ea37c039219189b6baa239ccf56007bd15f627d706062e98edf" target="_blank" rel="noreferrer">0.002276 ETH</a><a class="v" href="https://nearblocks.io/txns/82b4ByhDd8XGqiKeE7uX9mpRgm6Z8K3NY35EntYLvear" target="_blank" rel="noreferrer">1.336 NEAR</a></div>
+        <div class="tr"><span>Solana</span><a href="https://solscan.io/tx/2AYSjoxpGXvmgmtAxA2akbq3jEVEiWDmnEQvESuQEB72aqQwrUqa8DcTE45jteozUJTjzTKytjWtwUwadQwYfcyG" target="_blank" rel="noreferrer">0.0564 SOL</a><a class="v" href="https://nearblocks.io/txns/3Ym9NFJtGRjTcj5W1eLb6JqX2gKpKnYa1hdvpLm7i2uy" target="_blank" rel="noreferrer">1.340 NEAR</a></div>
+      </div>
+      <div class="sub">Real $5 payments from new wallets on Base and Solana, delivered to the demo shop's NEAR account; a third paid exactly 5 USDC through a payment link (<a href="/pay/receipt?deposit=0x6be4EDf96ACB2A77cc35D9fF0a9E2d6536Cb1059&amp;to=nearlyops.near&amp;get=usdc&amp;usd=5">receipt</a>). Check each one with 1Click: <a href="/api/checkout/verify?deposit=0x0dc7457FDdcD00e7DF887F331952c1cA5D15B8Fc&amp;recipient=nearlyops.near&amp;asset=nep141:wrap.near&amp;min_out=1335827000000000000000000" target="_blank" rel="noreferrer">Base</a>, <a href="/api/checkout/verify?deposit=DVueGZsLn6RzRkieZXxe1DXuSkxjhRzmGtMqMqvyF1Q7&amp;recipient=nearlyops.near&amp;asset=nep141:wrap.near&amp;min_out=1340483000000000000000000" target="_blank" rel="noreferrer">Solana</a>.</div>
+    </div>
+    <div class="card" id="embed">
+      <div class="name">Add it to your site</div>
+      <div class="code">&lt;script src="https://nearly.trade/widget/
+  nearly-checkout.js?v=1111c"&gt;&lt;/script&gt;
+&lt;div data-nearly-checkout
+  data-recipient="shop.near"
+  data-asset="nep141:wrap.near"
+  data-usd="5"&gt;&lt;/div&gt;</div>
+      <div class="sub">Non-custodial: the deposit address and the settlement belong to NEAR Intents, never to us.</div>
+    </div>
+    <div class="card">
+      <div class="sub">Buy a launch from any chain</div>
+      <div><div class="big">$5<small> of NEARLY</small></div><div class="sub">Paid from any wallet; the purchase settles on nearly.trade.</div></div>
+      <div class="grow" data-nearly-checkout data-asset="nearly-993927.nearlytrade.near" data-usd="5" data-label="Buy $5 of NEARLY"></div>
+    </div>
+    <div class="card span2">
+      <div class="name">Confirm the payment</div>
+      <div class="code">NearlyCheckout.mount(el, { recipient, asset, usd, onPaid(status, quote) })
+
+// confirm an order from your own server, straight from 1Click:
+GET https://nearly.trade/api/checkout/verify?deposit=&lt;depositAddress&gt;&amp;recipient=&lt;your account&gt;&amp;asset=&lt;asset id&gt;&amp;min_out=&lt;raw amount&gt;</div>
+      <div class="sub">onPaid updates the page; confirm the order from your server with the verify call.</div>
+    </div>
+  </div>
+</section>
+</div>
+<script src="/widget/nearly-checkout.js?v=1111c"></script>
+<script>
+// the widget draws in its own open shadow root; on this page it wears the cards' system (a merchant's page keeps its stock look)
+const dress = () => {
+  const css = `:host{font:14px/1.45 Geist,system-ui,sans-serif;color:var(--fg);-webkit-font-smoothing:antialiased}
+  .box{background:transparent;border:0;border-radius:0;padding:0;max-width:none;display:flex;flex-direction:column;height:100%}
+  .box>div:first-child,.box>div:nth-child(2){display:none}
+  .muted{color:var(--fg2);font-size:13px;font-weight:450}.ok{color:var(--jadet)}.bad{color:#f2777a}
+  .chips{gap:6px;margin:12px 0}.chip{font:500 12px Geist,system-ui;padding:4px 9px;border:1px solid var(--line);background:var(--s2);color:var(--fg);border-radius:999px}.chip.on{border-color:var(--fg3);color:var(--fg)}
+  input{height:40px;padding:0 12px;background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:10px;font:14px Geist,system-ui}input::placeholder{color:var(--fg3)}
+  .btn{height:40px;border-radius:10px;font:600 14px Geist,system-ui}.btn.p{width:100%;margin-top:10px!important;background:var(--jade);color:var(--ink)}.btn.p:hover{background:var(--jadehi)}.btn.g{background:transparent;color:var(--fg);border:1px solid var(--line)}
+  .row{color:var(--fg2)}.row b{color:var(--fg);font-family:'Geist Mono',monospace;font-weight:500}.addr{background:var(--bg);border-color:var(--line);font-family:'Geist Mono',monospace;color:var(--fg2)}`
+  document.querySelectorAll('[data-nearly-checkout]').forEach((h) => { if (h.shadowRoot && !h.shadowRoot.querySelector('style[data-dress]')) { const s = document.createElement('style'); s.dataset.dress = ''; s.textContent = css; h.shadowRoot.appendChild(s) } })
+}
+document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', () => setTimeout(dress)) : dress()
+// what the shop gets, at today's price: the exact amount comes back in the quote
+fetch('/api/stats').then((r) => r.json()).then((s) => { if (s.near_usd) document.getElementById('gets').textContent = `The shop receives about ${(5 / s.near_usd).toFixed(2)} NEAR` }).catch(() => {})
+</script>
+</body></html>

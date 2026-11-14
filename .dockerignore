@@ -1,0 +1,12 @@
+node_modules
+target
+server/data
+server/.env
+.git
+web
+ops
+contracts
+docs
+*.log
+**/node_modules
+**/*.bak*

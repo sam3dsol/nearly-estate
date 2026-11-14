@@ -1,0 +1,20 @@
+# Every push re-runs what a judge would: unit tests, the chain proofs on NEAR mainnet, the enclave attestation, a TEE receipt and the
+# contract tests. Nothing needs a secret: all of it reads public data.
+name: judge
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  judge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 24 }
+      - uses: dtolnay/rust-toolchain@stable
+      # Rebuild the contract in a clean container with the deployed build's toolchain (rustc 1.97.1, cargo-near 0.22.0), the same
+      # command as the README. npm run verify then compares this wasm with the code on mainnet, and any difference fails the run.
+      - name: rebuild the mainnet contract from this tree
+        run: |
+          docker run --rm --platform linux/amd64 -v "$PWD":/build -w /build/contracts/keys rust:1.97.1 bash -c 'export CARGO_HOME=$HOME/.cargo && rustup target add wasm32-unknown-unknown && curl -sSfL https://github.com/near/cargo-near/releases/download/cargo-near-v0.22.0/cargo-near-x86_64-unknown-linux-gnu.tar.gz | tar -xz -C /tmp && /tmp/cargo-near-x86_64-unknown-linux-gnu/cargo-near near build non-reproducible-wasm && sha256sum /build/target/near/nearly_keys/nearly_keys.wasm'
+          sudo chown -R "$(id -u):$(id -g)" target
+      - run: npm run setup
+      - run: npm run judge

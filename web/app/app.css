@@ -1,0 +1,161 @@
+/* The page chrome for running web/ on its own: Tailwind (the pages use a few of its utilities) and the nearly.trade app's colour
+   tokens, copied from its src/index.css (the theme, the dark, light and black grounds). The pages bring their own CSS
+   (market.css, wiki*.css). Fonts: the app's chrome fonts are not loaded here, so the shell uses the pages' Geist. */
+@import "tailwindcss";
+
+@theme {
+  /* Warm near-black chrome, one metal accent. All the colour on the page comes from the
+     token plates, so the frame around them stays quiet. */
+  --color-bg: #080807;
+  --color-bg-1: #0F0E0C;
+  --color-bg-2: #131210;
+  --color-line: #262420;
+  --color-line-2: #3A362F;
+  --color-edge: #4F4A40;
+  --color-fg: #EDE8DC;
+  --color-fg-2: #A8A296;
+  --color-fg-3: #837D70;
+  --color-accent: #2DD4BF;
+  --color-accent-2: #7EE8D8;
+  --color-accent-ink: #021714;
+  --color-gold: #F2B03D;
+  --color-up: #5FD08A;
+  --color-sell: #C8635A;
+
+  --font-display: "Geist Variable", system-ui, sans-serif;
+  --font-sans: "Geist Variable", system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, monospace;
+
+  /* 3px read as industrial. Soft corners are most of what
+     separates "premium product" from "terminal" at a glance. */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+}
+
+:root {
+  color-scheme: dark;
+  /* the brand sweep and the key's bottom edge, swapped by lib/accent.ts */
+  --accent-a: #7AF0DC;
+  --accent-b: #14B8A6;
+  --accent-edge: #0B4F4A;
+
+  /* ── the ground is tinted by the accent ────────────────────────────────────────────────────
+     A neutral black with one coloured stripe reads as severe. Bathing every surface in a few
+     percent of the live accent is what makes a palette feel designed rather than applied — and
+     because these mix from --accent-a/b, the whole page re-tints when the theme changes. */
+  --color-bg: color-mix(in srgb, var(--accent-b) 9%, #04110C);
+  --color-bg-1: color-mix(in srgb, var(--accent-b) 7%, #0D1113);
+  --color-bg-2: color-mix(in srgb, var(--accent-b) 9%, #12171A);
+  --color-line: color-mix(in srgb, var(--accent-a) 16%, #23292C);
+  --color-line-2: color-mix(in srgb, var(--accent-a) 26%, #333A3E);
+  /* the resting outline of anything clickable (chips, header icon keys, search): a card hairline (--color-line) made
+     outlined keys vanish into the card. Every mode's value clears 3:1 against both the card and the ground. */
+  --color-edge: color-mix(in srgb, var(--accent-a) 26%, #4C5559);
+  --color-fg: color-mix(in srgb, var(--accent-b) 3%, #F1F6F9);
+  --color-fg-2: color-mix(in srgb, var(--accent-b) 10%, #9AA5A8);
+  /* #6E787B resolved to 4.08:1 on the ground and 4.19:1 on cards — under the 4.5 floor, and this
+     token drives every small mono label (.lbl/.tab/.chip/.seg). #7C878A gives 4.85 / 4.98. */
+  --color-fg-3: color-mix(in srgb, var(--accent-b) 10%, #7C878A);
+
+  /* ── liquid metal ──────────────────────────────────────────────────────────────────────────
+     A surface is three things stacked: a translucent pane you can see the page through, a
+     diagonal sheen that reads as polished metal, and a bright hairline along the top edge where
+     the light catches. Kept as variables so light mode only has to restate them, not every rule. */
+  --glass: color-mix(in srgb, var(--color-bg-1) 72%, transparent);
+  --glass-blur: 14px;
+  --sheen: linear-gradient(135deg, rgb(255 255 255 / .07) 0%, rgb(255 255 255 / .015) 28%, rgb(255 255 255 / 0) 52%, rgb(0 0 0 / .05) 100%);
+  --rim: rgb(255 255 255 / .10);
+  --rim-soft: rgb(255 255 255 / .05);
+  --cast: 0 18px 40px -22px rgb(0 0 0 / .9);
+}
+
+/* Light is a genuinely different material: the ground is warm paper, the panes are white glass,
+   and the sheen has to come down or every card looks blown out. */
+:root[data-theme='light'] {
+  color-scheme: light;
+  /* Light is a tinted ground, not white: a few percent of the accent through the whole page is
+     what stops it reading as a default admin panel. */
+  --color-bg: color-mix(in srgb, var(--accent-tint, var(--accent-b)) 4%, #F1F4F2);
+  --color-bg-1: color-mix(in srgb, var(--accent-tint, var(--accent-b)) 2%, #FFFFFF);
+  --color-bg-2: color-mix(in srgb, var(--accent-tint, var(--accent-b)) 6%, #E9EDEA);
+  --color-line: color-mix(in srgb, var(--accent-tint, var(--accent-b)) 10%, #D8DFDA);
+  --color-line-2: color-mix(in srgb, var(--accent-tint, var(--accent-b)) 18%, #BCC6C0);
+  --color-edge: color-mix(in srgb, var(--accent-tint, var(--accent-b)) 16%, #7D847F);
+  --color-fg: #0B1210;
+  --color-fg-2: #4E5A55;
+  /* #7C8783 measured 3.72:1 on white and 3.30:1 on the paper ground — under the 4.5:1 floor for
+     small text, and fg-3 drives every 10-11px mono label (.lbl, .tab, .chip, .seg). 5.61 / 4.98 now. */
+  --color-fg-3: #5F6A66;
+  /* the dark theme's #5FD08A / #C8635A were 1.9:1 and 3.8:1 on white; these clear 4.5:1 on cards and ground */
+  --color-up: #0F7A3E;
+  --color-sell: #B83A2E;
+  --an-dim: 58%;
+  --glass: color-mix(in srgb, #FFFFFF 62%, transparent);
+  --sheen: linear-gradient(135deg, rgb(255 255 255 / .85) 0%, rgb(255 255 255 / .25) 30%, rgb(255 255 255 / 0) 55%, rgb(0 0 0 / .035) 100%);
+  --rim: rgb(255 255 255 / .9);
+  --rim-soft: rgb(255 255 255 / .5);
+  --cast: 0 16px 34px -22px rgb(60 52 30 / .35);
+}
+html, body { height: 100%; }
+/* Glass only reads as glass when there is something behind it to bend. Two soft accent fields,
+   fixed so they drift under the content as the page scrolls. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  /* These were 34/20/16%. At that strength the aurora was not atmosphere, it was a wash: every
+     surface on the page already glowed accent, so an accent number, an up-badge or a progress bar
+     had nothing to be brighter THAN. Halving it costs nothing at a glance and gives the palette a
+     quiet ground to put signal on. Keep it low. */
+  background:
+    radial-gradient(74% 52% at 50% 126%, color-mix(in srgb, var(--accent-b) 15%, transparent), transparent 68%),
+    radial-gradient(58% 48% at 6% 2%, color-mix(in srgb, var(--accent-b) 8%, transparent), transparent 64%),
+    radial-gradient(52% 44% at 98% 26%, color-mix(in srgb, var(--accent-a) 7%, transparent), transparent 68%);
+}
+:root[data-theme='light'] body::before { opacity: .22; }
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+#root { min-height: 100dvh; }
+
+/* Third mode: pure black ground, neutral greys, no accent
+   tint in the surfaces. Plain hex on purpose, so old browsers without color-mix() get it too. */
+:root[data-theme='black'] {
+  color-scheme: dark;
+  /* halfway from pure black to the dark-mode green (B of A/B/C), the same family
+     as the PnL card ground #05201A. Edge #62626B still clears 3:1 on both (3.2 ground, 3.1 card). */
+  --color-bg: #02100D;
+  --color-bg-1: #0C1414;
+  --color-bg-2: #131D1E;
+  --color-line: #283435;
+  --color-line-2: #3A4C4D;
+  --color-edge: #62626B;
+  --color-fg: #F5F5F5;
+  --color-fg-2: #A1A1A6;
+  --color-fg-3: #85858B;
+  --glass: #0C1414;
+  --rim: rgb(255 255 255 / .06);
+  --rim-soft: rgb(255 255 255 / .03);
+}
+
+/* grounds: the picker's Background row. Flat fills only,
+   never a glow or gradient behind content. Each set keeps --color-fg-3 at 4.5:1+ and --color-edge at
+   3:1+ on the ground and on cards. tint = the default; black = pure black; green = the dark-mode green. */
+:root[data-ground='black']:not([data-theme='light']) { --color-bg: #000000; --color-bg-1: #0B0B0C; --color-bg-2: #141416; --color-line: #1F1F22; --color-line-2: #2E2E33; --color-edge: #62626B; --color-fg-2: #A1A1A6; --color-fg-3: #85858B; --glass: #0B0B0C; }
+:root[data-ground='tint']:not([data-theme='light']) { --color-bg: #02100D; --color-bg-1: #0C1414; --color-bg-2: #131D1E; --color-line: #283435; --color-line-2: #3A4C4D; --color-edge: #62626B; --color-fg-2: #A6A6AB; --color-fg-3: #85858B; --glass: #0C1414; }
+:root[data-ground='green']:not([data-theme='light']) { --color-bg: #05201A; --color-bg-1: #0E1D1D; --color-bg-2: #122627; --color-line: #314948; --color-line-2: #466967; --color-edge: #587D7B; --color-fg-2: #99B6B7; --color-fg-3: #759091; --glass: #0E1D1D; }
+:root[data-ground='jade']:not([data-theme='light']) { --color-bg: #062824; --color-bg-1: #0B2E2A; --color-bg-2: #113531; --color-line: #2A4B46; --color-line-2: #3D625C; --color-edge: #5F8580; --color-fg-2: #ACC5C0; --color-fg-3: #839E99; --glass: #0B2E2A; }
+:root[data-ground='ocean']:not([data-theme='light']) { --color-bg: #05242A; --color-bg-1: #0A2B31; --color-bg-2: #103238; --color-line: #284850; --color-line-2: #3B5F67; --color-edge: #5D8289; --color-fg-2: #AAC3C8; --color-fg-3: #82A0A5; --glass: #0A2B31; }
+:root[data-ground='emerald']:not([data-theme='light']) { --color-bg: #04261A; --color-bg-1: #092C20; --color-bg-2: #0F3327; --color-line: #284B3D; --color-line-2: #3B6352; --color-edge: #5E8676; --color-fg-2: #A6C1B5; --color-fg-3: #829F92; --glass: #092C20; }

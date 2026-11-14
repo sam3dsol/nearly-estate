@@ -1,0 +1,386 @@
+{
+ "accounts": 18,
+ "actions": 44,
+ "by_product": {
+  "wiki": 8,
+  "keys": 15,
+  "swarm": 5
+ },
+ "since": "2026-11-13T00:00:00.000Z",
+ "new_since": 0,
+ "list": [
+  {
+   "account": "missoralways.near",
+   "products": [
+    "keys"
+   ],
+   "actions": 1,
+   "first": {
+    "tx": "Ea2QnSodweYsKMCKyQLzUfEYtSW1uR5UScQ81W7T7YiM",
+    "at": 1794125042978,
+    "method": "buy_key",
+    "signer": "missoralways.near"
+   },
+   "last": {
+    "tx": "Ea2QnSodweYsKMCKyQLzUfEYtSW1uR5UScQ81W7T7YiM",
+    "at": 1794125042978,
+    "method": "buy_key",
+    "signer": "missoralways.near"
+   }
+  },
+  {
+   "account": "coldpant65.near",
+   "products": [
+    "keys"
+   ],
+   "actions": 1,
+   "first": {
+    "tx": "DPW4dPzcaRv2ZdgDpxNZ2dmAgZD5eUDpN1qc97rzHH23",
+    "at": 1794131899872,
+    "method": "buy_key",
+    "signer": "coldpant65.near"
+   },
+   "last": {
+    "tx": "DPW4dPzcaRv2ZdgDpxNZ2dmAgZD5eUDpN1qc97rzHH23",
+    "at": 1794131899872,
+    "method": "buy_key",
+    "signer": "coldpant65.near"
+   }
+  },
+  {
+   "account": "aranzimaxxing.user.intear.near",
+   "products": [
+    "keys"
+   ],
+   "actions": 1,
+   "first": {
+    "tx": "Drs8HCKoeM8km1xKBrQRak1oc1D4oZswMhHTQ1nMkSZu",
+    "at": 1794134758497,
+    "method": "buy_key",
+    "signer": "aranzimaxxing.user.intear.near"
+   },
+   "last": {
+    "tx": "Drs8HCKoeM8km1xKBrQRak1oc1D4oZswMhHTQ1nMkSZu",
+    "at": 1794134758497,
+    "method": "buy_key",
+    "signer": "aranzimaxxing.user.intear.near"
+   }
+  },
+  {
+   "account": "pearlfather.near",
+   "products": [
+    "keys"
+   ],
+   "actions": 1,
+   "first": {
+    "tx": "HooRqmyxr3zbCydv12EgLCi5PHEQaTgf6Uu6oHEgZhNN",
+    "at": 1794167272427,
+    "method": "buy_key",
+    "signer": "pearlfather.near"
+   },
+   "last": {
+    "tx": "HooRqmyxr3zbCydv12EgLCi5PHEQaTgf6Uu6oHEgZhNN",
+    "at": 1794167272427,
+    "method": "buy_key",
+    "signer": "pearlfather.near"
+   }
+  },
+  {
+   "account": "lovelysugar.near",
+   "products": [
+    "wiki",
+    "keys"
+   ],
+   "actions": 3,
+   "first": {
+    "tx": "CS1Bqn9oeXu1PoSURJjRnr7ndC4zc1GxSFiJnXK9ihvt",
+    "at": 1794278728481,
+    "method": "Buy",
+    "signer": "lovelysugar.near"
+   },
+   "last": {
+    "tx": "2E9Soh5tunr2h1g1hqde7FuC9XjQHS9xw7Bk8hws5a5U",
+    "at": 1794281788080,
+    "method": "Buy",
+    "signer": "lovelysugar.near"
+   }
+  },
+  {
+   "account": "samanthalewis.tg",
+   "products": [
+    "keys",
+    "swarm"
+   ],
+   "actions": 2,
+   "first": {
+    "tx": "HPKCot2j4vACd9oWEcz3aqqQMMwrae2kXwWq1Ttb5LMY",
+    "at": 1794296912345,
+    "method": "buy_key",
+    "signer": "samanthalewis.tg"
+   },
+   "last": {
+    "tx": "5Jrb3FNFv6Xr1fir3EFmGn9RwVUW4Dbjq4qyjhrUH1pA",
+    "at": 1794327373700,
+    "method": "join_swarm",
+    "signer": "samanthalewis.tg"
+   }
+  },
+  {
+   "account": "i1378949451.tg",
+   "products": [
+    "keys"
+   ],
+   "actions": 1,
+   "first": {
+    "tx": "De3kHkebJRcW8weMePk4kz5LnctLBYxR6NSd7HBDqQdS",
+    "at": 1794332997197,
+    "method": "buy_key",
+    "signer": "i1378949451.tg"
+   },
+   "last": {
+    "tx": "De3kHkebJRcW8weMePk4kz5LnctLBYxR6NSd7HBDqQdS",
+    "at": 1794332997197,
+    "method": "buy_key",
+    "signer": "i1378949451.tg"
+   }
+  },
+  {
+   "account": "congos.tg",
+   "products": [
+    "keys"
+   ],
+   "actions": 1,
+   "first": {
+    "tx": "6orQEzTEByCj9orHSR5p6BjBBbGHYF7feZVkh6D69HDG",
+    "at": 1794333234167,
+    "method": "register_key",
+    "signer": "congos.tg"
+   },
+   "last": {
+    "tx": "6orQEzTEByCj9orHSR5p6BjBBbGHYF7feZVkh6D69HDG",
+    "at": 1794333234167,
+    "method": "register_key",
+    "signer": "congos.tg"
+   }
+  },
+  {
+   "account": "sergeserge1.tg",
+   "products": [
+    "keys",
+    "wiki"
+   ],
+   "actions": 3,
+   "first": {
+    "tx": "ChkcgYKGgtbgDUvUgPoMLeVdwzjTyAoeK9qZMziwPXSg",
+    "at": 1794334025873,
+    "method": "register_key",
+    "signer": "sergeserge1.tg"
+   },
+   "last": {
+    "tx": "7DyDaJd6TXD7cpwN4D38gTeqvFtPmQuSKbJaUK91fUNY",
+    "at": 1794334455889,
+    "method": "Buy",
+    "signer": "sergeserge1.tg"
+   }
+  },
+  {
+   "account": "fesan52.near",
+   "products": [
+    "keys",
+    "swarm"
+   ],
+   "actions": 4,
+   "first": {
+    "tx": "DUsUDuGGEuweWnGXqrsxvo84Rf6GyopJaEHcSyMSYzzE",
+    "at": 1794347741748,
+    "method": "register_key",
+    "signer": "fesan52.near"
+   },
+   "last": {
+    "tx": "u2wwWcetJX2tLgf2R16EMzwdb5cJHsD7CKZiaT8g6Aw",
+    "at": 1794357630268,
+    "method": "buy_key",
+    "signer": "fesan52.near"
+   }
+  },
+  {
+   "account": "oscoi.near",
+   "products": [
+    "keys",
+    "swarm",
+    "wiki"
+   ],
+   "actions": 6,
+   "first": {
+    "tx": "Aqzyn6QLnxwVSKva5D7cjiL9X4AE9JCnVgh9HPkhcfic",
+    "at": 1794352184296,
+    "method": "register_key",
+    "signer": "oscoi.near"
+   },
+   "last": {
+    "tx": "Hj8qKooiPxHdshi9UvKGChcnqEWaLfdyyJJnbJigdnSP",
+    "at": 1794420748581,
+    "method": "Buy",
+    "signer": "oscoi.near"
+   }
+  },
+  {
+   "account": "maiye.near",
+   "products": [
+    "keys"
+   ],
+   "actions": 2,
+   "first": {
+    "tx": "ASoBHPsvXkakHg8PDrdQbJ8FrgeeamzimJfDsYXmPGcr",
+    "at": 1794377489227,
+    "method": "register_key",
+    "signer": "maiye.near"
+   },
+   "last": {
+    "tx": "7RW1zcXRcehagUtfy7vN1MBVaju1fRx65YBGeMCAekC3",
+    "at": 1794378312568,
+    "method": "buy_key",
+    "signer": "maiye.near"
+   }
+  },
+  {
+   "account": "xerofom.tg",
+   "products": [
+    "keys",
+    "wiki"
+   ],
+   "actions": 4,
+   "first": {
+    "tx": "2DwwQwfUiULnSpqWVAkTYNSjWjqMY2qfubyge8sDUw66",
+    "at": 1794389313273,
+    "method": "register_key",
+    "signer": "xerofom.tg"
+   },
+   "last": {
+    "tx": "3n6SCiJZS7LEyMeo7r1QgMhjUDDf9pDmnNPTQcpAWc2z",
+    "at": 1794394097415,
+    "method": "sell",
+    "signer": "xerofom.tg"
+   }
+  },
+  {
+   "account": "m1halich228.tg",
+   "products": [
+    "wiki"
+   ],
+   "actions": 2,
+   "first": {
+    "tx": "mBnZ3YW4R2QhYH1vGv8bfzjcCioR27sc7AQQvdvBVj6",
+    "at": 1794389949453,
+    "method": "Create",
+    "signer": "m1halich228.tg"
+   },
+   "last": {
+    "tx": "2xJ6oUTd21SxepYVb7uWJY37DLtKdcHHrkkzWXhG8dWY",
+    "at": 1794390325318,
+    "method": "Buy",
+    "signer": "m1halich228.tg"
+   }
+  },
+  {
+   "account": "nightwatchman.near",
+   "products": [
+    "wiki"
+   ],
+   "actions": 1,
+   "first": {
+    "tx": "JDsHaAbRNHy5gDbJWr1mcYaTLUgfiPh672zH6H8nXFxL",
+    "at": 1794405182963,
+    "method": "Buy",
+    "signer": "nightwatchman.near"
+   },
+   "last": {
+    "tx": "JDsHaAbRNHy5gDbJWr1mcYaTLUgfiPh672zH6H8nXFxL",
+    "at": 1794405182963,
+    "method": "Buy",
+    "signer": "nightwatchman.near"
+   }
+  },
+  {
+   "account": "testonlyy.near",
+   "products": [
+    "keys",
+    "swarm"
+   ],
+   "actions": 2,
+   "first": {
+    "tx": "DcZPVVQ4Cc8T372vhNkkXQhqxJQutNURaXNq9yWebHE2",
+    "at": 1794405927374,
+    "method": "buy_key",
+    "signer": "testonlyy.near"
+   },
+   "last": {
+    "tx": "7ViN5sabSskUnotxW2DtM2YhDh1CMgHzp33sToMaeXtn",
+    "at": 1794406436700,
+    "method": "post_job",
+    "signer": "testonlyy.near"
+   }
+  },
+  {
+   "account": "i1999244981.tg",
+   "products": [
+    "wiki"
+   ],
+   "actions": 3,
+   "first": {
+    "tx": "FCXfkm85NDEBu4KjNG73c7DVYEFjCuFRwkhCnqJXQUko",
+    "at": 1794406998592,
+    "method": "Buy",
+    "signer": "i1999244981.tg"
+   },
+   "last": {
+    "tx": "AodMxMYRSENmcTy6M4FBEcYzcHrVMeu58CLFJRsHCp1P",
+    "at": 1794407149738,
+    "method": "Buy",
+    "signer": "i1999244981.tg"
+   }
+  },
+  {
+   "account": "pn193014.tg",
+   "products": [
+    "wiki",
+    "keys",
+    "swarm"
+   ],
+   "actions": 6,
+   "first": {
+    "tx": "2zX4fYs8tHm4YgWTq2fhsishNSyFtwQjSmrZA82FR5fV",
+    "at": 1794418952104,
+    "method": "Buy",
+    "signer": "pn193014.tg"
+   },
+   "last": {
+    "tx": "J89hH3krcWVBpZc267Qic7tmE9mRSjenco7YhUPB7Rau",
+    "at": 1794427177926,
+    "method": "cancel_job",
+    "signer": "pn193014.tg"
+   }
+  }
+ ],
+ "complete": true,
+ "txs_read": 8080,
+ "team": [
+  "nearlyops.near",
+  "keys.nearlyops.near",
+  "keysop.nearlyops.near",
+  "markets.nearlyops.near",
+  "nearlytrade.near",
+  "the protocol's fee account (name withheld)",
+  "ff137ad6d493ce8b465c30b10c17be6d1fa0a72cff2dc911aad44d579dd8b7e3",
+  "3d465f5ce7512dc41539850ea3de38c354afcdc3b9c09fcecb16fad0ab5383bf",
+  "c1217093db67a2c0856b3f000e1ec950b309417765af866b324c31c68c5bf799",
+  "95a7c85df6c7e68e92b84f4b60b71d23a68b4af3394cbed5fd9e94f6d02785b0",
+  "868200a3572e78e2ef42bb117c8f8330df16c9b15e1f5582740c0ffddc570b82",
+  "e7fbb3f76d0e8bcd49c3c662c95ee5a6e7e38f56a6b3a3517470fdd1f47b695e",
+  "f94b154c08486b038d3fb426ea4323f351edb89aaa731895cf7f3b289c8a1926",
+  "ece4c74e05504aa3774214012c0c7d4000a0a4a2e8c0432a183ebb646db6229e"
+ ],
+ "team_rule": "these accounts, and every swarm agent one of them owns (read from the contract each round); a swarm agent owned by someone else counts for its owner",
+ "check": "npm run outside (re-checks every account's first transaction on chain)",
+ "note": "baseline before the users brought on Nov 13 and 14: read from the chain on 2026-11-12, every account re-checked by npm run outside (18 PASS)"
+}
