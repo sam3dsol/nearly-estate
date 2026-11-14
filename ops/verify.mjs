@@ -165,7 +165,8 @@ for (const m of markets.filter((x) => x.status.Proposed || x.status.Challenged |
     if (!Array.isArray(r.voices)) return [shape ? null : false, `${SITE}/api/markets/${m.id}/receipt`, `${shape ? short + '; three models, three registered keys, two of three on the outcome' : 'the panel on chain is not three models under three registered keys'}; the server serves only the stored receipt`]
     const bad = panel.map((v) => {
       const R = r.voices.find((x) => x.model === v.model); if (!R) return `${v.model}: no receipt served`
-      const [ok, note] = receiptOk(R, v.receipt, m.question, [`"outcome":${v.outcome}`])
+      // a voice kept with no outcome either abstained or found the wording invalid: the contract accepts either form in the signed reply
+      const [ok, note] = receiptOk(R, v.receipt, m.question, v.outcome == null ? ['"outcome":null', '"outcome":"invalid"'] : [`"outcome":${v.outcome}`])
       return ok && String(R.signer).toLowerCase() === v.signer.toLowerCase() ? null : `${v.model.split('/').pop()}: ${ok ? 'signed by another key' : note}`
     }).filter(Boolean)
     return [shape && !bad.length, `${SITE}/api/markets/${m.id}/receipt`, bad.join('; ') || short]
